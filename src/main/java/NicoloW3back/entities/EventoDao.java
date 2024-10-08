@@ -1,5 +1,6 @@
 package NicoloW3back.entities;
 
+import exception.NotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 
@@ -16,5 +17,11 @@ public class EventoDao {
         entityManager.persist(newEvento);
         transaction.commit();
         System.out.println("L'evento" + newEvento.getTitolo() + " è stato salvato correttamente");
+    }
+
+    public Evento getByid(long eventoId) {
+        Evento found = entityManager.find(Evento.class, eventoId);
+        if (found == null) throw new NotFoundException(eventoId);
+        return found;
     }
 }
